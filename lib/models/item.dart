@@ -27,4 +27,35 @@ class Item {
       'createdAt': Timestamp.fromDate(createdAt),
     };
   }
+  // Create Item object from Firestore document snapshot
+  factory Item.fromMap(String id, Map<String, dynamic> map) {
+    return Item(
+      id: id,
+      name: map['name'] ?? '',
+      quantity: map['quantity']?.toInt() ?? 0,
+      price: map['price']?.toDouble() ?? 0.0,
+      category: map['category'] ?? '',
+      createdAt: map['createdAt'] != null 
+          ? (map['createdAt'] as Timestamp).toDate()
+          : DateTime.now(),
+    );
+  }
+  // Copy with method for updating items
+  Item copyWith({
+    String? id,
+    String? name,
+    int? quantity,
+    double? price,
+    String? category,
+    DateTime? createdAt,
+  }) {
+    return Item(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      quantity: quantity ?? this.quantity,
+      price: price ?? this.price,
+      category: category ?? this.category,
+      createdAt: createdAt ?? this.createdAt,
+    );
+  }
 }
