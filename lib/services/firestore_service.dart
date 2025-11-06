@@ -36,4 +36,12 @@ class FirestoreService {
       throw Exception('Failed to update item: $e');
     }
   }
+  // Delete an item by its document ID
+  Future<void> deleteItem(String itemId) async {
+    try {
+      await _itemsCollection.doc(itemId).delete();
+    } catch (e) {
+      throw Exception('Failed to delete item: $e');
+    }
+  }
 }
