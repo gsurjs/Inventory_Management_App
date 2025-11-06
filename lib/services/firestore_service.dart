@@ -44,4 +44,19 @@ class FirestoreService {
       throw Exception('Failed to delete item: $e');
     }
   }
+  // Search items by name for enhanced feature
+  Stream<List<Item>> searchItems(String query) {
+    if (query.isEmpty) return getItemsStream();
+    
+    String searchKey = query.toLowerCase();
+    return _itemsCollection
+        .orderBy('name')
+        .snapshots()
+        .map((snapshot) {
+      return snapshot.docs
+          .map((doc) => Item.fromMap(doc.id, doc.data()))
+          .where((item) => item.name.toLowerCase().contains(searchKey))
+          .toList();
+    });
+  }
 }
