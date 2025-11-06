@@ -25,4 +25,15 @@ class FirestoreService {
       }).toList();
     });
   }
+  // Update an existing item by its document ID
+  Future<void> updateItem(Item item) async {
+    if (item.id == null) {
+      throw Exception('Cannot update item without ID');
+    }
+    try {
+      await _itemsCollection.doc(item.id).update(item.toMap());
+    } catch (e) {
+      throw Exception('Failed to update item: $e');
+    }
+  }
 }
