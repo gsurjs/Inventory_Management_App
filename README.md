@@ -1,6 +1,6 @@
-# firestore_crud_app
+# Inventory Management App
 
-A new Flutter project.
+CRUD App for Inventory Management
 
 ## Getting Started
 
