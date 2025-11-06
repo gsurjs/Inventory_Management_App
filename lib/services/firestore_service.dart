@@ -71,4 +71,37 @@ class FirestoreService {
       }).toList();
     });
   }
+  // Get inventory statistics for enhanced feature
+  Future<Map<String, dynamic>> getInventoryStats() async {
+    try {
+      final snapshot = await _itemsCollection.get();
+      final items = snapshot.docs.map((doc) => 
+        Item.fromMap(doc.id, doc.data())
+      ).toList();
+
+      int totalItems = items.length;
+      double totalValue = 0;
+      List<Item> outOfStock = [];
+      List<Item> lowStock = [];
+
+      for (var item in items) {
+        totalValue += item.quantity * item.price;
+        if (item.quantity == 0) {
+          outOfStock.add(item);
+        } else if (item.quantity < 5) {
+          lowStock.add(item);
+        }
+      }
+
+      return {
+        'totalItems': totalItems,
+        'totalValue': totalValue,
+        'outOfStock': outOfStock,
+        'lowStock': lowStock,
+        'itemCount': items.fold<int>(0, (sum, item) => sum + item.quantity),
+      };
+    } catch (e) {
+      throw Exception('Failed to get statistics: $e');
+    }
+  }
 }
