@@ -59,4 +59,16 @@ class FirestoreService {
           .toList();
     });
   }
+  // Get items by category for enhanced feature
+  Stream<List<Item>> getItemsByCategory(String category) {
+    return _itemsCollection
+        .where('category', isEqualTo: category)
+        .orderBy('createdAt', descending: true)
+        .snapshots()
+        .map((snapshot) {
+      return snapshot.docs.map((doc) {
+        return Item.fromMap(doc.id, doc.data());
+      }).toList();
+    });
+  }
 }
