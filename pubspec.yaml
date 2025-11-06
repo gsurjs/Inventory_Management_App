@@ -1,5 +1,5 @@
 name: firestore_crud_app
-description: "A new Flutter project."
+description: Inventory Management App with Firestore
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -30,6 +30,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  firebase_core: ^2.24.0
+  cloud_firestore: ^4.9.5
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
